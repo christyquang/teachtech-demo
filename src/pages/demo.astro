@@ -1,0 +1,159 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+
+---
+<Layout>
+    <!-- Hero Widget ******************* -->
+
+    <Hero
+        tagline=""
+    >
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white highlight">Demo</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Elevate your engagement in classrooms by trying out our IEP generator!
+    </Fragment>
+  </Hero>
+
+  
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Astro</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 20px auto; /* Adjust margin to center */
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .upload-section {
+                flex: 1;
+                margin-right: 20px;
+            }
+
+            .upload-section form {
+                background-color: #f7f7f7;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+
+            .upload-section label {
+                font-weight: bold;
+            }
+
+            .upload-section input[type="file"] {
+                margin-top: 8px;
+            }
+
+            .upload-section button {
+                margin-top: 16px;
+                padding: 8px 16px;
+                background-color: #8bc34a; /* Light green */
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .upload-section button:hover {
+                background-color: #689f38; /* Darker shade of green on hover */
+            }
+
+            .pdf-preview {
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container"> <!-- New container for the next row -->
+            <div class="upload-section"> <!-- New upload section -->
+                <form action="" method="post" enctype="multipart/form-data" id="pdfForm3">
+                    <label for="pdf3">Upload IEP Template:</label><br>
+                    <input type="file" name="pdf3" id="fileInput3" accept=".pdf"><br>
+                    <button type="submit">Submit</button>
+                </form>
+                <div class="pdf-preview" id="pdfPreviewContainer3"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="upload-section">
+                <form action="" method="post" enctype="multipart/form-data" id="pdfForm1">
+                    <label for="pdf1">Past Student IEP:</label><br>
+                    <input type="file" name="pdf1" id="fileInput1" accept=".pdf"><br>
+                    <button type="submit">Submit</button>
+                </form>
+                <div class="pdf-preview" id="pdfPreviewContainer1"></div>
+            </div>
+
+            <div class="upload-section">
+                <form action="" method="post" enctype="multipart/form-data" id="pdfForm2">
+                    <label for="pdf2">Past Teacher IEP:</label><br>
+                    <input type="file" name="pdf2" id="fileInput2" accept=".pdf"><br>
+                    <button type="submit">Submit</button>
+                </form>
+                <div class="pdf-preview" id="pdfPreviewContainer2"></div>
+            </div>
+        </div>
+
+        <script>
+            const fileInput1 = document.getElementById('fileInput1');
+            const fileInput2 = document.getElementById('fileInput2');
+            const fileInput3 = document.getElementById('fileInput3');
+
+            fileInput1.addEventListener('change', () => {
+                previewPdf(fileInput1.files[0], 'pdfPreviewContainer1');
+            });
+
+            fileInput2.addEventListener('change', () => {
+                previewPdf(fileInput2.files[0], 'pdfPreviewContainer2');
+            });
+
+            fileInput3.addEventListener('change', () => {
+                previewPdf(fileInput3.files[0], 'pdfPreviewContainer3');
+            });
+
+            function previewPdf(file, containerId) {
+                const container = document.getElementById(containerId);
+                if (file && container) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const embed = document.createElement('embed');
+                        embed.setAttribute('src', event.target.result);
+                        embed.setAttribute('type', 'application/pdf');
+                        embed.setAttribute('width', '100%');
+                        embed.setAttribute('height', '300px');
+                        container.innerHTML = '';
+                        container.appendChild(embed);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    container.innerHTML = '';
+                }
+            }
+        </script>
+    </body>
+    </html>
+
+
+</Layout>
+

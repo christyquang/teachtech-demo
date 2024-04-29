@@ -1,0 +1,120 @@
+---
+import WidgetWrapper from "~/components/ui/WidgetWrapper.astro";
+import Headline from "~/components/ui/Headline.astro";
+import ItemGrid2 from "~/components/ui/ItemGrid2.astro";
+import type { Features as Props } from "~/types";
+import Features3 from '~/components/widgets/Features3.astro';
+
+
+const {
+  title = await Astro.slots.render("title"),
+  subtitle = await Astro.slots.render("subtitle"),
+  tagline = await Astro.slots.render("tagline"),
+  items = [],
+  columns = 2,
+  defaultIcon,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render("bg"),
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-5xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <!-- Your headline component can go here if needed -->
+  <div class="container">
+    <div class="upload-section">
+      <form action="" method="post" enctype="multipart/form-data" id="pdfForm3">
+        <label for="pdf3"><b>Upload IEP Template:</b></label><br><br>
+        <input type="file" name="pdf3" id="fileInput3" accept=".pdf"><br>
+        <button class="green-btn" type="submit">Submit</button>
+      </form>
+      <br>
+      <div class="pdf-preview" id="pdfPreviewContainer3"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="upload-section">
+      <form action="" method="post" enctype="multipart/form-data" id="pdfForm1">
+        <label for="pdf1"><b>Past Student IEP:</b></label><br><br>
+        <input type="file" name="pdf1" id="fileInput1" accept=".pdf"><br>
+        <button class="green-btn" type="submit">Submit</button>
+      </form>
+      <br>
+      <div class="pdf-preview" id="pdfPreviewContainer1"></div>
+    </div>
+
+    <div class="upload-section">
+      <form action="" method="post" enctype="multipart/form-data" id="pdfForm2">
+        <br>
+        <label for="pdf2"><b>Past Teacher IEP:</b></label><br><br>
+        <input type="file" name="pdf2" id="fileInput2" accept=".pdf"><br>
+        <button class="green-btn" type="submit">Submit</button>
+      </form>
+      <br>
+      <div class="pdf-preview" id="pdfPreviewContainer2"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    const fileInput1 = document.getElementById('fileInput1');
+    const fileInput2 = document.getElementById('fileInput2');
+    const fileInput3 = document.getElementById('fileInput3');
+
+    fileInput1.addEventListener('change', () => {
+      previewPdf(fileInput1.files[0], 'pdfPreviewContainer1');
+    });
+
+    fileInput2.addEventListener('change', () => {
+      previewPdf(fileInput2.files[0], 'pdfPreviewContainer2');
+    });
+
+    fileInput3.addEventListener('change', () => {
+      previewPdf(fileInput3.files[0], 'pdfPreviewContainer3');
+    });
+
+    function previewPdf(file, containerId) {
+      const container = document.getElementById(containerId);
+      if (file && container) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const embed = document.createElement('embed');
+          embed.setAttribute('src', event.target.result);
+          embed.setAttribute('type', 'application/pdf');
+          embed.setAttribute('width', '100%');
+          embed.setAttribute('height', '500px');
+          container.innerHTML = '';
+          container.appendChild(embed);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        container.innerHTML = '';
+      }
+    }
+  </script>
+
+  <style>
+    .green-btn {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background-color: #34833a; /* Light green */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .green-btn:hover {
+    background-color: #689f38; /* Darker shade of green on hover */
+  }
+
+  .container {
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Add border */
+    padding: 20px; /* Add padding */ 
+    border-radius: 8px; /* Add border radius */
+  }
+  </style>
+</WidgetWrapper>
